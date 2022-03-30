@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<?php
+
+use Zend\Session\Container;
+
+$container = new Container('alert');
+$userLogincontainer = new Container('userLoginContainer');
+$catFileResult = $this->GetCategoryFileList();
+?>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="<?php echo $this->basePath() . '/uploads/image/favicon.png'; ?>" type="image/png">
+	<title>Vehicle Management</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/css/bootstrap.css'; ?>">
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/vendors/linericon/style.css'; ?>">
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/css/font-awesome.min.css'; ?>">
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/vendors/owl-carousel/owl.carousel.min.css'; ?>">
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/vendors/lightbox/simpleLightbox.css'; ?>">
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/vendors/nice-select/css/nice-select.css'; ?>">
+	<!-- main css -->
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/css/style.css'; ?>">
+	<link rel="stylesheet" href="<?php echo $this->basePath() . '/site/css/responsive.css'; ?>">
+</head>
+
+<body>
+
+	<!--================Header Area =================-->
+	<div class="main-content">
+		<?php echo $this->content; ?>
+	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="<?php echo $this->basePath() . '/site/js/jquery-3.2.1.min.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/js/popper.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/js/bootstrap.min.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/vendors/owl-carousel/owl.carousel.min.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/js/jquery.ajaxchimp.min.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/js/mail-script.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/js/mail-script.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/js/stellar.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/vendors/lightbox/simpleLightbox.min.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/vendors/flipclock/timer.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/vendors/nice-select/js/jquery.nice-select.min.js'; ?>"></script>
+	<script src="<?php echo $this->basePath() . '/site/js/custom.js'; ?>"></script>
+	<script type="text/javascript">
+		str = $(location).attr('pathname');
+		splitsUrl = str.split("/", 4);
+		if (splitsUrl[1] == "contact") {
+			$(".allmenu").removeClass("active");
+			$(".contact").addClass("active");
+		} else if (splitsUrl[1] == "about-us") {
+			$(".allmenu").removeClass("active");
+			$(".about-us").addClass("active");
+		} else {
+			$(".allmenu").removeClass("active");
+			$(".home").addClass("active");
+		}
+		$(document).ready(function() {
+			<?php
+			if (isset($container->alertMsg) && $container->alertMsg != "") {
+			?>
+				alert("<?php echo $container->alertMsg; ?>");
+			<?php
+				$container->alertMsg = "";
+				unset($container->alertMsg);
+			}
+			?>
+		});
+
+		function validateNow() {
+			flag = deforayValidator.init({
+				formId: 'contact'
+			});
+			if (flag) {
+				challenge_field = document.getElementById("challengeResponse").value;
+
+				if (challenge_field != "") {
+					$.post("<?php echo $this->url('checkcaptcha', array('action' => 'check-captcha')); ?>", {
+							challenge_field: challenge_field
+						},
+						function(data) {
+							if (data == 'fail') {
+								alert("Text you entered from the image is incorrect. Please try again", "err");
+								getCaptcha('capDiv');
+								document.getElementById("challengeResponse").value = "";
+								return false;
+							} else {
+								document.getElementById("contact").submit();
+							}
+						});
+				} else {
+					alert("Please enter the text from the image to proceed.", "err");
+				}
+			}
+		}
+
+		function getCaptcha(captchaDivId) {
+			var d = new Date();
+			var randstr = 'r-' + d.getFullYear() + d.getSeconds() + d.getMilliseconds() + Math.random();
+			$("#" + captchaDivId).attr("src", '/captcha/' + randstr);
+			$("#" + captchaDivId).load(function() {
+
+			});
+		}
+
+		$(".checkNum").keydown(function(e) {
+			// Allow: backspace, delete, tab, escape, enter and .
+			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+				// Allow: Ctrl+A
+				(e.keyCode == 65 && e.ctrlKey === true) ||
+				// Allow: home, end, left, right
+				(e.keyCode >= 35 && e.keyCode <= 39)) {
+				// let it happen, don't do anything
+				return;
+			}
+			// Ensure that it is a number and stop the keypress
+			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+				e.preventDefault();
+			}
+		});
+
+		function showModal(url, w, h) {
+			showdefModal('dDiv', w, h);
+			document.getElementById('dFrame').style.height = h + 'px';
+			document.getElementById('dFrame').style.width = w + 'px';
+			document.getElementById('dFrame').src = url;
+		}
+
+		function closeModal() {
+			document.getElementById('dFrame').src = "";
+			hidedefModal('dDiv');
+		}
+	</script>
+</body>
+
+</html>
