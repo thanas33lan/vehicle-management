@@ -33,8 +33,8 @@ class VehicleBrandsService
         $adapter->beginTransaction();
         try {
             $vehicleDb = $this->sm->get('VehicleBrandsTable');
-            $vehicleId = $vehicleDb->saveVehicleDetails($params);
-            if ($vehicleId > 0) {
+            $vbId = $vehicleDb->saveVehicleDetails($params);
+            if ($vbId > 0) {
                 $adapter->commit();
                 $alertContainer = new Container('alert');
                 $alertContainer->alertMsg = 'Vehicle detail saved successfully';
@@ -53,10 +53,10 @@ class VehicleBrandsService
         return $vehicleDb->fetchVehicleListInGrid($parameters, $acl);
     }
 
-    public function getAllActiveVehicle()
+    public function getAllActiveVehicleBrands()
     {
         $vehicleDb = $this->sm->get('VehicleBrandsTable');
-        return $vehicleDb->fetchAllActiveVehicle();
+        return $vehicleDb->fetchAllActiveVehicleBrands();
     }
 
     public function getVehicleById($id)
@@ -68,12 +68,12 @@ class VehicleBrandsService
     public function deleteById($id)
     {
         $vehicleDb = $this->sm->get('VehicleBrandsTable');
-        return $vehicleDb->deleteByVehicleId($id);
+        return $vehicleDb->deleteByvbId($id);
     }
 
     public function changeStatusById($id)
     {
         $vehicleDb = $this->sm->get('VehicleBrandsTable');
-        return $vehicleDb->changeStatusByVehicleId($id);
+        return $vehicleDb->changeStatusByvbId($id);
     }
 }

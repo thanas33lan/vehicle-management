@@ -9,7 +9,7 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('Admin\\Controller\\QtyDetails', 'change-status', 'Change Status');
 
 -- Thana 29-Mar-2022
-UPDATE `resources` SET `resource_id` = 'Admin\\Controller\\Vehicle' WHERE `resources`.`resource_id` = 'Admin\\Controller\\Category'
+UPDATE `resources` SET `resource_id` = 'Admin\Controller\VehicleBrands' WHERE `resources`.`resource_id` = 'Admin\\Controller\\Category'
 
 -- Thana 30-Mar-2022
-UPDATE `privileges` SET `resource_id` = 'Admin\\Controller\\Vehicle' WHERE `privileges`.`resource_id` = 'Admin\\Controller\\Category' AND `privileges`.`privilege_name` = 'change-status';
+UPDATE `privileges` SET `resource_id` = 'Admin\Controller\VehicleBrands' WHERE `privileges`.`resource_id` = 'Admin\\Controller\\Category' AND `privileges`.`privilege_name` = 'change-status';

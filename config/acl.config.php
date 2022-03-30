@@ -2,7 +2,7 @@
 return array(
   'ADM' =>
   array(
-    'Admin\\Controller\\Vehicle' =>
+    'Admin\Controller\VehicleBrands' =>
     array(
       'index' => 'allow',
       'add' => 'allow',

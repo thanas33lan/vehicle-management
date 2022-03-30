@@ -61,12 +61,12 @@ return array(
                     ),
                 ),
             ),
-            'admin-vehicle' => array(
+            'admin-vehicle-brands' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/admin/vehicle[/:action][/][:id]',
+                    'route'    => '/admin/vehicle-brands[/:action][/][:id]',
                     'defaults' => array(
-                        'controller' => 'Admin\Controller\Vehicle',
+                        'controller' => 'Admin\Controller\VehicleBrands',
                         'action' => 'index',
                     ),
                 ),
@@ -144,17 +144,17 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Admin\Controller\Index'        => 'Admin\Controller\IndexController',
-            'Admin\Controller\Login'        => 'Admin\Controller\LoginController',
-            'Admin\Controller\Role'         => 'Admin\Controller\RoleController',
-            'Admin\Controller\User'         => 'Admin\Controller\UserController',
-            'Admin\Controller\Customer'     => 'Admin\Controller\CustomerController',
-            'Admin\Controller\Vehicle'      => 'Admin\Controller\VehicleController',
-            'Admin\Controller\Zone'         => 'Admin\Controller\ZoneController',
-            'Admin\Controller\Product'      => 'Admin\Controller\ProductController',
-            'Admin\Controller\QtyDetails'   => 'Admin\Controller\QtyDetailsController',
-            'Admin\Controller\Supplier'     => 'Admin\Controller\SupplierController',
-            'Admin\Controller\Purchase'     => 'Admin\Controller\PurchaseController',
+            'Admin\Controller\Index'            => 'Admin\Controller\IndexController',
+            'Admin\Controller\Login'            => 'Admin\Controller\LoginController',
+            'Admin\Controller\Role'             => 'Admin\Controller\RoleController',
+            'Admin\Controller\User'             => 'Admin\Controller\UserController',
+            'Admin\Controller\Customer'         => 'Admin\Controller\CustomerController',
+            'Admin\Controller\VehicleBrands'    => 'Admin\Controller\VehicleBrandsController',
+            'Admin\Controller\Zone'             => 'Admin\Controller\ZoneController',
+            'Admin\Controller\Product'          => 'Admin\Controller\ProductController',
+            'Admin\Controller\QtyDetails'       => 'Admin\Controller\QtyDetailsController',
+            'Admin\Controller\Supplier'         => 'Admin\Controller\SupplierController',
+            'Admin\Controller\Purchase'         => 'Admin\Controller\PurchaseController'
         ),
     ),
     'view_manager' => array(

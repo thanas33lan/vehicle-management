@@ -18,8 +18,8 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\User', 'index')) {
 if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Zone', 'index')) {
 	$managerMenu .= "<li id='nav-main-item'><a id='admin-zone' class='nav-main-link' href=" . $this->url('admin-zone', array('action' => 'index')) . "><span class='nav-main-link-name'>Zone</span></a></li>";
 }
-if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Vehicle', 'index')) {
-	$managerMenu .= "<li id='nav-main-item'><a id='admin-vehicle' class='nav-main-link' href=" . $this->url('admin-vehicle', array('action' => 'index')) . "><span class='nav-main-link-name'>Vehicle</span></a></li>";
+if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\VehicleBrands', 'index')) {
+	$managerMenu .= "<li id='nav-main-item'><a id='admin-vehicle-brands' class='nav-main-link' href=" . $this->url('admin-vehicle-brands', array('action' => 'index')) . "><span class='nav-main-link-name'>Vehicle Brands</span></a></li>";
 }
 if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\QtyDetails', 'index')) {
 	$managerMenu .= "<li id='nav-main-item'><a id='admin-qty' class='nav-main-link' href=" . $this->url('admin-qty', array('action' => 'index')) . "><span class='nav-main-link-name'>Qty Details</span></a></li>";
@@ -351,9 +351,9 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Customer', 'index'))
 			} else if (splitsUrl[2] == "product") {
 				$("#manage").addClass("open");
 				$("#admin-product").addClass("active");
-			} else if (splitsUrl[2] == "vehicle") {
+			} else if (splitsUrl[2] == "vehicle-brands") {
 				$("#manage").addClass("open");
-				$("#admin-vehicle").addClass("active");
+				$("#admin-vehicle-brands").addClass("active");
 			} else if (splitsUrl[2] == "zone") {
 				$("#manage").addClass("open");
 				$("#admin-zone").addClass("active");

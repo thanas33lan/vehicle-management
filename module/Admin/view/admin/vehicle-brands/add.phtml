@@ -7,11 +7,11 @@ $sessionLogin = new Container('credo');
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Category</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Vehicle Brands</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <a href="<?php echo $this->url('admin-category', array('action' => 'index')); ?>">
-                        <li class="breadcrumb-item">Category</li>
+                    <a href="<?php echo $this->url('admin-vehicle-brands', array('action' => 'index')); ?>">
+                        <li class="breadcrumb-item">Vehicle Brands</li>
                     </a>
                     <li class="breadcrumb-item active" aria-current="page">&nbsp;/ Add</li>
                 </ol>
@@ -24,18 +24,18 @@ $sessionLogin = new Container('credo');
 <div class="content">
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Add Category Details</h3>
+            <h3 class="block-title">Add Vehicle Brands Details</h3>
         </div>
         <div class="block-content">
-            <form name="categoryInformation" id="categoryInformation" class="mb-5" action="<?php echo $this->url('admin-category', array('action' => 'add')); ?>" method="post">
+            <form name="vehicleBrandsInformation" id="vehicleBrandsInformation" class="mb-5" action="<?php echo $this->url('admin-vehicle-brands', array('action' => 'add')); ?>" method="post">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="name">Name<span class="mandatory">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control isRequired" id="name" name="name" placeholder="Enter the name" title="Please enter the name" onblur="checkNameValidation('category', 'vb_name', this, null, 'Entered name id exist . Please enter an another name.')">
+                        <input type="text" class="form-control isRequired" id="name" name="name" placeholder="Enter the name" title="Please enter the name" onblur="checkNameValidation('vehicles_brands', 'vb_name', this, null, 'Entered name id exist . Please enter an another name.')">
                     </div>
                     <label class="col-sm-2 col-form-label" for="slug">Slug<span class="mandatory">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control isRequired" id="slug" name="slug" placeholder="Enter the slug" title="Please enter the slug" onblur="checkNameValidation('category', 'vb_slug', this, null, 'Entered slug id exist . Please enter an another slug.')">
+                        <input type="text" class="form-control isRequired" id="slug" name="slug" placeholder="Enter the slug" title="Please enter the slug" onblur="checkNameValidation('vehicles_brands', 'vb_slug', this, null, 'Entered slug id exist . Please enter an another slug.')">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -43,12 +43,12 @@ $sessionLogin = new Container('credo');
                     <div class="col-sm-4">
                         <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter the description" title="Please enter the description"></textarea>
                     </div>
-                    <label class="col-sm-2 col-form-label" for="parentId">Parent Category</label>
+                    <label class="col-sm-2 col-form-label" for="parentId">Parent Vehicle</label>
                     <div class="col-sm-4">
-                        <select class="form-control selectpicker isBootstrapSelect" data-selected-text-format="count > 3" data-live-search="true" data-container="body" data-actions-box="true" id="parentId" name="parentId" data-placeholder="Choose one parent category ..." title="Please select the parent category">
-                            <?php if (isset($categorylist) && count($categorylist) > 0) {
-                                foreach ($categorylist as $category) {
-                                    echo '<option value="' . base64_encode($category['vb_id']) . '">' . $category['vb_name'] . '</option>';
+                        <select class="form-control selectpicker isBootstrapSelect" data-selected-text-format="count > 3" data-live-search="true" data-container="body" data-actions-box="true" id="parentId" name="parentId" data-placeholder="Choose one parent Vehicle ..." title="Please select the parent Vehicle">
+                            <?php if (isset($vehicleList) && count($vehicleList) > 0) {
+                                foreach ($vehicleList as $vehicle) {
+                                    echo '<option value="' . base64_encode($vehicle['vb_id']) . '">' . $vehicle['vb_name'] . '</option>';
                                 }
                             } ?>
                         </select>
@@ -58,7 +58,7 @@ $sessionLogin = new Container('credo');
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="status">Status<span class="mandatory">*</span></label>
                     <div class="col-sm-4">
-                        <select class="form-control isRequired" id="status" name="status" title="Please select the category status">
+                        <select class="form-control isRequired" id="status" name="status" title="Please select the Vehicle status">
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                         </select>
@@ -67,7 +67,7 @@ $sessionLogin = new Container('credo');
                 <hr>
                 <div class="row items-push submit">
                     <div class="col-lg-7 offset-lg-4">
-                        <a href="<?php echo $this->url('admin-category', array('action' => 'index')); ?>" class="btn btn-hero-dark">Cancel</a>&nbsp;
+                        <a href="<?php echo $this->url('admin-vehicle-brands', array('action' => 'index')); ?>" class="btn btn-hero-dark">Cancel</a>&nbsp;
                         <button type="submit" class="btn btn-hero-primary" onclick="validateNow();return false;"><i class="fa fa-fw fa-check"></i> Submit</button>
                     </div>
                 </div>
@@ -85,12 +85,12 @@ $sessionLogin = new Container('credo');
 
     function validateNow() {
         flag = deforayValidator.init({
-            formId: 'categoryInformation'
+            formId: 'vehicleBrandsInformation'
         });
         if (flag) {
             if (duplicateName) {
                 $.blockUI();
-                document.getElementById('categoryInformation').submit();
+                document.getElementById('vehicleBrandsInformation').submit();
             }
         }
     }

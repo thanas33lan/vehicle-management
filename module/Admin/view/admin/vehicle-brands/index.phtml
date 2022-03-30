@@ -6,7 +6,7 @@ $sessionLogin = new Container('user');
 $role = $sessionLogin->roleCode;
 
 $acl = $this->layout()->acl;
-if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) {
+if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\VehicleBrands', 'edit')) {
     $editAction = ' {"sClass":"center"},{"sClass":"center"},{"sClass":"center"},{"sClass":"center",bSortable:false}';
 } else {
     $editAction = ' {"sClass":"center"},{"sClass":"center"},{"sClass":"center"}';
@@ -65,12 +65,12 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Category</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Vehicle Brands</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <?php if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'add')) { ?>
-                            <a href="javascript:void(0);" onclick="showAddForm(this,'add-btn');" class="add-btn btn btn-hero-primary pull-right" style="margin-top:-5px;"><i class="fa fa-plus"></i>&nbsp;Add New Category</a>
+                        <?php if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\VehicleBrands', 'add')) { ?>
+                            <a href="javascript:void(0);" onclick="showAddForm(this,'add-btn');" class="add-btn btn btn-hero-primary pull-right" style="margin-top:-5px;"><i class="fa fa-plus"></i>&nbsp;Add New Vehicle</a>
                         <?php } ?>
                     </li>
                 </ol>
@@ -82,18 +82,18 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
 <div class="content show-form" style="display: none;">
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Add Category Details</h3>
+            <h3 class="block-title">Add Vehicle Brands Details</h3>
         </div>
         <div class="block-content">
-            <form name="categoryInformation" id="categoryInformation" class="mb-5" action="<?php echo $this->url('admin-category', array('action' => 'add')); ?>" method="post">
+            <form name="vehicleBrandsInformation" id="vehicleBrandsInformation" class="mb-5" action="<?php echo $this->url('admin-vehicle-brands', array('action' => 'add')); ?>" method="post">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="name">Name<span class="mandatory">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control isRequired" id="name" name="name" placeholder="Enter the name" title="Please enter the name" onblur="checkNameValidation('category', 'vb_name', this, null, 'Entered name id exist . Please enter an another name.')">
+                        <input type="text" class="form-control isRequired" id="name" name="name" placeholder="Enter the name" title="Please enter the name" onblur="checkNameValidation('vehicles_brands', 'vb_name', this, null, 'Entered name id exist . Please enter an another name.')">
                     </div>
                     <label class="col-sm-2 col-form-label" for="slug">Slug<span class="mandatory">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control isRequired" id="slug" name="slug" placeholder="Enter the slug" title="Please enter the slug" onblur="checkNameValidation('category', 'vb_slug', this, null, 'Entered slug id exist . Please enter an another slug.')">
+                        <input type="text" class="form-control isRequired" id="slug" name="slug" placeholder="Enter the slug" title="Please enter the slug" onblur="checkNameValidation('vehicles_brands', 'vb_slug', this, null, 'Entered slug id exist . Please enter an another slug.')">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -101,12 +101,12 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
                     <div class="col-sm-4">
                         <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter the description" title="Please enter the description"></textarea>
                     </div>
-                    <label class="col-sm-2 col-form-label" for="parentId">Parent Category</label>
+                    <label class="col-sm-2 col-form-label" for="parentId">Parent Brand</label>
                     <div class="col-sm-4">
-                        <select class="form-control selectpicker isBootstrapSelect" data-selected-text-format="count > 3" data-live-search="true" data-container="body" data-actions-box="true" id="parentId" name="parentId" data-placeholder="Choose one parent category ..." title="Please select the parent category">
-                            <?php if (isset($categorylist) && count($categorylist) > 0) {
-                                foreach ($categorylist as $category) {
-                                    echo '<option value="' . base64_encode($category['vb_id']) . '">' . $category['vb_name'] . '</option>';
+                        <select class="form-control selectpicker isBootstrapSelect" data-selected-text-format="count > 3" data-live-search="true" data-container="body" data-actions-box="true" id="parentId" name="parentId" data-placeholder="Choose one parent Vehicle ..." title="Please select the parent Vehicle">
+                            <?php if (isset($vehiclelist) && count($vehiclelist) > 0) {
+                                foreach ($vehiclelist as $vehicle) {
+                                    echo '<option value="' . base64_encode($vehicle['vb_id']) . '">' . $vehicle['vb_name'] . '</option>';
                                 }
                             } ?>
                         </select>
@@ -116,7 +116,7 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="status">Status<span class="mandatory">*</span></label>
                     <div class="col-sm-4">
-                        <select class="form-control isRequired" id="status" name="status" title="Please select the category status">
+                        <select class="form-control isRequired" id="status" name="status" title="Please select the Vehicle status">
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                         </select>
@@ -145,7 +145,7 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
                         <th>Name</th>
                         <th>Description</th>
                         <th>Status</th>
-                        <?php if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) { ?>
+                        <?php if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\VehicleBrands', 'edit')) { ?>
                             <th>Action</th>
                         <?php } ?>
                     </tr>
@@ -179,7 +179,7 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
             "aoColumns": [
                 <?php echo $editAction; ?>
             ],
-            "sAjaxSource": "<?php echo $this->url('admin-category', array('action' => 'index')); ?>",
+            "sAjaxSource": "<?php echo $this->url('admin-vehicle-brands', array('action' => 'index')); ?>",
             "fnServerData": function(sSource, aoData, fnCallback) {
                 $.ajax({
                     "dataType": 'json',
@@ -192,11 +192,11 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
         });
     });
 
-    function deleteCategory(id) {
-        if (confirm('Are you sure want to delete this category?')) {
+    function deleteVehicle(id) {
+        if (confirm('Are you sure want to delete this Vehicle?')) {
             $.blockUI();
-            $.post("<?php echo $this->url('admin-category', array('action' => 'delete')); ?>", {
-                    categoryId: id
+            $.post("<?php echo $this->url('admin-vehicle-brands', array('action' => 'delete')); ?>", {
+                    VehicleId: id
                 },
                 function(data) {
                     oTable.fnDraw();
@@ -208,7 +208,7 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
 
     function changeStatus(catId, catStatus) {
         $.blockUI();
-        $.post("<?php echo $this->url('admin-category', array('action' => 'change-status')); ?>", {
+        $.post("<?php echo $this->url('admin-vehicle-brands', array('action' => 'change-status')); ?>", {
                 id: catId,
                 status: catStatus
             },
@@ -221,12 +221,12 @@ if (isset($acl) && $acl->isAllowed($role, 'Admin\Controller\Category', 'edit')) 
 
     function validateNow() {
         flag = deforayValidator.init({
-            formId: 'categoryInformation'
+            formId: 'vehicleBrandsInformation'
         });
         if (flag) {
             if (duplicateName) {
                 $.blockUI();
-                document.getElementById('categoryInformation').submit();
+                document.getElementById('vehicleBrandsInformation').submit();
             }
         }
     }

@@ -25,23 +25,24 @@ class VehicleBrandsTable extends AbstractTableGateway
 
     public function saveVehicleDetails($params)
     {
-        // \Zend\Debug\Debug::dump($params);die;
+
         # save Vehicle details code...
         $common = new CommonService();
         $sessionLogin = new Container('user');
         $data = array(
             'vb_name'     => $params['name'],
             'vb_slug'     => $params['slug'],
-            'description'       => $params['description'],
-            'parent_id'         => (isset($params['parentId']) && trim($params['parentId']) != '') ? base64_decode($params['parentId']) : 0,
+            'description' => $params['description'],
+            'parent_id'   => (isset($params['parentId']) && $params['parentId'] != '') ? base64_decode($params['parentId']) : null,
             'vb_status'   => $params['status']
         );
-
-        if (isset($params['VehicleId']) && $params['VehicleId'] != '') {
+        /* \Zend\Debug\Debug::dump($data);
+        die; */
+        if (isset($params['vbId']) && $params['vbId'] != '') {
             $data['modified_on'] = $common->getDateTime();
             $data['modified_by'] = $sessionLogin->userId;
-            $this->update($data, array('vb_id' => base64_decode($params['VehicleId'])));
-            $lastInsertId = base64_decode($params['VehicleId']);
+            $this->update($data, array('vb_id' => base64_decode($params['vbId'])));
+            $lastInsertId = base64_decode($params['vbId']);
         } else {
             $data['created_on'] = $common->getDateTime();
             $data['created_by'] = $sessionLogin->userId;
@@ -69,7 +70,7 @@ class VehicleBrandsTable extends AbstractTableGateway
         return $lastInsertId;
     }
 
-    public function fetchAllActiveVehicle()
+    public function fetchAllActiveVehicleBrands()
     {
         # fetching active Vehicle list...
         $vehicleList = $this->select(array('vb_status' => 'active'))->toArray();
@@ -99,13 +100,13 @@ class VehicleBrandsTable extends AbstractTableGateway
         return $data;
     }
 
-    public function deleteByVehicleId($id)
+    public function deleteByvbId($id)
     {
         # remove the Vehicle...
         return $this->delete(array('vb_id' => base64_decode($id)));
     }
 
-    public function changeStatusByVehicleId($params)
+    public function changeStatusByvbId($params)
     {
         # change the status of the Vehicle...
         return $this->update(array('vb_status' => $params['status']), array('vb_id' => base64_decode($params['id'])));
@@ -203,17 +204,17 @@ class VehicleBrandsTable extends AbstractTableGateway
         );
         $sessionLogin = new Container('user');
         $role = $sessionLogin->roleCode;
-        if ($acl->isAllowed($role, 'Admin\Controller\Vehicle', 'edit')) {
+        if ($acl->isAllowed($role, 'Admin\Controller\VehicleBrands', 'edit')) {
             $update = true;
         } else {
             $update = false;
         }
-        /* if ($acl->isAllowed($role, 'Admin\Controller\Vehicle', 'delete')) {
+        /* if ($acl->isAllowed($role, 'Admin\Controller\VehicleBrands', 'delete')) {
             $delete = true;
         } else {
             $delete = false;
         } */
-        if ($acl->isAllowed($role, 'Admin\Controller\Vehicle', 'change-status')) {
+        if ($acl->isAllowed($role, 'Admin\Controller\VehicleBrands', 'change-status')) {
             $changeStatus = true;
         } else {
             $changeStatus = false;
@@ -241,7 +242,7 @@ class VehicleBrandsTable extends AbstractTableGateway
             $row[] = $aRow['description'];
             $row[] = ucwords($aRow['vb_status']);
             if ($update) {
-                $updateLink = '<a href="/admin/Vehicle/edit/' . base64_encode($aRow['vb_id']) . '" class="btn btn-sm btn-outline-info" style="margin-left: 2px;" title="Edit Vehicle of ' . ucwords($aRow['vb_name']) . '"><i class="far fa-edit"></i> Edit</a>';
+                $updateLink = '<a href="/admin/vehicle-brands/edit/' . base64_encode($aRow['vb_id']) . '" class="btn btn-sm btn-outline-info" style="margin-left: 2px;" title="Edit Vehicle of ' . ucwords($aRow['vb_name']) . '"><i class="far fa-edit"></i> Edit</a>';
             }
             /* if($delete){
                 $deleteLink = '<a href="javascript:void(0);" onclick="deleteVehicle(\''.base64_encode($aRow['vb_id']).'\')" class="btn btn-sm btn-outline-danger" style="margin-left: 2px;" title="Delete Vehicle of '.ucwords($aRow['vb_name']).'"><i class="far fa-trash-alt"></i> Delete</a>';
